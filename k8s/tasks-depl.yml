@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tasks-api-depl
+spec:
+  selector:
+    matchLabels:
+      app: tasks-api
+  template:
+    metadata:
+      labels:
+        app: tasks-api
+    spec:
+      containers:
+      - name: tasks-api
+        image: gagandeep39/k8s-node-network-tasks-api:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "150m"
+        env:
+          - name: AUTH_URL
+            value: auth-api-srv
+          - name: TASKS_FOLDER
+            value: tasks
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: tasks-api-srv
+spec:
+  selector:
+    app: tasks-api
+  # Must be exposed to the world
+  type: LoadBalancer
+  ports:
+  - port: 8000
+    targetPort: 8000
