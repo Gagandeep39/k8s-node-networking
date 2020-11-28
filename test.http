@@ -1,0 +1,36 @@
+# NOTE - Replace host.docker.internal with localhost
+### Fetching a token by signing up
+POST http://host.docker.internal:8080/signup
+Content-Type: application/json
+
+{
+  "email": "test@mail.com",
+  "password": "123456"
+}
+
+### Perform Login
+POST http://host.docker.internal:8080/login
+Content-Type: application/json
+
+{
+  "email": "test@mail.com",
+  "password": "123456"
+}
+
+### Add a task
+POST http://host.docker.internal:8000/tasks
+Authorization: Bearer abc
+Content-Type: application/json
+
+{
+  "text": "This is text",
+  "title": "This is title"
+}
+
+### Fetch All tasks without token
+GET http://host.docker.internal:8000/tasks
+
+### Fetch All tasks
+GET http://host.docker.internal:8000/tasks
+Authorization: Bearer abc
+
