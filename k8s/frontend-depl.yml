@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-depl
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: gagandeep39/k8s-node-network-frontend:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "150m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-srv
+spec:
+  selector:
+    app: frontend
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
