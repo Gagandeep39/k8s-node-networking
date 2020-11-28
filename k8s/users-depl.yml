@@ -12,13 +12,24 @@ spec:
       labels:
         app: users-api
     spec:
+      # Consists of 2 Pods
+      # Auth, Users Pod
       containers:
       - name: users-api
         image: gagandeep39/k8s-node-network-users-api:latest
+        env:
+          - name: AUTH_URL
+            value: localhost
         resources:
           limits:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "150m"
+      - name: auth-api
+        image: gagandeep39/k8s-node-network-auth-api:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "150m"
 ---
 apiVersion: v1
 kind: Service
